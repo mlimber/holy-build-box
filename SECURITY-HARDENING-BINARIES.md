@@ -1,17 +1,19 @@
 # Security hardening binaries
 
-Holy Build Box makes it easy to compile your application with special security hardening features:
+Holy Build Box makes it easy to compile your application with special security hardening features. This is done through the `exe_gc_light_hardened` `exe_gc_hardened` library variants.
 
- * Protection against stack overflows and stack smashing
- * Extra bounds checking in common functions
- * Load time address randomization
- * Read-only global offset table
+| Security feature                                      | exe_gc_light_hardened | exe_gc_hardened |
+|-------------------------------------------------------|-----------------------|-----------------|
+| Protection against stack overflows and stack smashing | Yes                   |                 |
+| Extra bounds checking in common functions             | Yes                   |                 |
+| Load time address randomization                       | Yes                   | Yes             |
+| Read-only global offset table                         | Yes                   | Yes             |
 
-This is done through the `exe_gc_hardened` library variant. See [tutorial 5](TUTORIAL-5-LIBRARY-VARIANTS) for more information about library variants. When this variant is activated, Holy Build Box will set the necessary security hardening flags in `$CLFAGS`, `$CXXFLAGS` and `$LDFLAGS`.
+See [tutorial 5](TUTORIAL-5-LIBRARY-VARIANTS) for more information about library variants. When one of these variants is activated, Holy Build Box will set the necessary security hardening flags in `$CLFAGS`, `$CXXFLAGS` and `$LDFLAGS`.
 
-## WARNING: -O3 not supported
+## WARNING: -O3 not supported in `exe_gc_hardened`
 
-The `exe_gc_hardened` variant is not compatible with `-O3`. Ensure that your code is compiled with `-O2` or lower.
+The `exe_gc_hardened` variant is not compatible with `-O3`. Ensure that your code is compiled with `-O2` or lower, or use `exe_gc_light_hardened`.
 
 ## The `hardening-check` tool
 

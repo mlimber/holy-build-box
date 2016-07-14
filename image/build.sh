@@ -42,7 +42,7 @@ SKIP_CURL=${SKIP_CURL:-$SKIP_LIBS}
 SKIP_SQLITE=${SKIP_SQLITE:-$SKIP_LIBS}
 
 MAKE_CONCURRENCY=2
-VARIANTS='exe exe_gc_hardened shlib'
+VARIANTS='exe exe_gc_light_hardened exe_gc_hardened shlib'
 export PATH=/hbb/bin:$PATH
 
 #########################
