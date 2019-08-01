@@ -10,6 +10,7 @@ CCACHE_VERSION=3.5
 CMAKE_VERSION=3.13.2
 CMAKE_MAJOR_VERSION=3.13
 PYTHON_VERSION=2.7.15
+PYTHON3_VERSION=3.7.4
 GCC_LIBSTDCXX_VERSION=7.3.0
 ZLIB_VERSION=1.2.11
 OPENSSL_VERSION=1.0.2q
@@ -300,11 +301,13 @@ fi
 
 ### Python
 
-if ! eval_bool "$SKIP_PYTHON"; then
-	header "Installing Python $PYTHON_VERSION"
-	download_and_extract Python-$PYTHON_VERSION.tgz \
-		Python-$PYTHON_VERSION \
-		https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz
+function installPython( _pyVer )
+{
+    if ! eval_bool "$SKIP_PYTHON"; then
+	header "Installing Python $_pyVer"
+	download_and_extract Python-$_pyVer.tgz \
+		Python-$_pyVer \
+		https://www.python.org/ftp/python/$_pyVer/Python-$_pyVer.tgz
 
 	(
 		activate_holy_build_box_deps_installation_environment
@@ -319,7 +322,7 @@ if ! eval_bool "$SKIP_PYTHON"; then
 
 	echo "Leaving source directory"
 	popd >/dev/null
-	run rm -rf Python-$PYTHON_VERSION
+	run rm -rf Python-$_pyVer
 
 	# Install setuptools and pip
 	echo "Installing setuptools and pip..."
@@ -328,8 +331,13 @@ if ! eval_bool "$SKIP_PYTHON"; then
 	run rm -f ez_setup.py
 	run easy_install pip
 	run rm -f /setuptools*.zip
-fi
+	
+	run python -m pip install meson
+  fi
+}
 
+installPython( $PYTHON_VERSION )
+installPython( $PYTHON3_VERSION )
 
 ## libstdc++
 
